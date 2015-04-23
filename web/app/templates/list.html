@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1>Movie list</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Director</th>
+                    <th>Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="movie in movies">
+                    <td>{{movie.name}}</td>
+                    <td>{{movie.director}}</td>
+                    <td>{{movie.year}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a ng-href='#/movies/new'>New movie</a>
+    </div>
+</div>
