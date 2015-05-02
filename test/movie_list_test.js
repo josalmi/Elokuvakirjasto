@@ -18,14 +18,21 @@ describe('Movie list', function () {
             ];
             return {
                 // Toteuta FirebaseServicen mockatut metodit tähän
-                getMovies: function() {
+                getMovies: function () {
                     return movies;
+                },
+                remove: function (movie) {
+                    var index = movies.indexOf(movie);
+                    if (index !== -1) {
+                        movies.splice(index, 1);
+                    }
                 }
             }
         })();
 
         // Lisää vakoilijat
         spyOn(FirebaseServiceMock, 'getMovies').and.callThrough();
+        spyOn(FirebaseServiceMock, 'remove').and.callThrough();
 
         // Injektoi toteuttamasi kontrolleri tähän
         inject(function ($controller, $rootScope) {
@@ -60,6 +67,10 @@ describe('Movie list', function () {
      * käyttämällä toBeCalled-oletusta.
      */
     it('should be able to remove a movie', function () {
-        expect(true).toBe(false);
+        var movie = scope.movies[1];
+        scope.removeMovie(movie);
+
+        expect(FirebaseServiceMock.remove).toHaveBeenCalled();
+        expect(scope.movies.length).toBe(1);
     });
 });

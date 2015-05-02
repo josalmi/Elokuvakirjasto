@@ -1,22 +1,72 @@
+
+<div class="row">
+    <div class="col-md-6">
+        <h1>Search movies</h1>
+        <form>
+            <div class="form-group">
+                <label for="search-title">Movie title</label>
+                <input id="search-title" class="form-control" ng-model="options.s" placeholder="Movie title">
+            </div>
+            <div class="form-group">
+                <label for="search-year">Release year</label>
+                <input id="search-year" class="form-control" ng-model="options.y" placeholder="Year of release">
+            </div>
+            <button type="submit" ng-click="findMovies()" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+            </button>
+        </form>
+    </div>
+</div>
+<div class="row" ng-show="omdbMovies">
+    <div class="col-md-12">
+        <h3><ng-pluralize count="omdbMovies.length"
+                          when="{'0': 'No movies found',
+                          'one': 'One movie found',
+                          'other': '{} movies found'}">
+            </ng-pluralize></h3>
+
+        <table class="table">
+            <thead>
+                <tr><th>Name</th><th>Year</th></tr>
+            </thead>
+            <tr ng-repeat="movie in omdbMovies| orderBy:'Year'">
+                <td><a ng-href="http://www.imdb.com/title/{{movie.imdbID}}">{{movie.Title}}</a></td>
+                <td>{{movie.Year}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
-        <h1>Movie list</h1>
+        <h1>Movies</h1>
         <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Director</th>
                     <th>Year</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="movie in movies">
-                    <td>{{movie.name}}</td>
+                    <td><a ng-href="#/movies/{{movie.$id}}">{{movie.name}}</a></td>
                     <td>{{movie.director}}</td>
                     <td>{{movie.year}}</td>
+                    <td>
+                        <a class="btn btn-success" ng-href="#/movies/{{movie.$id}}/edit">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+                        </a>
+                        <button class="btn btn-danger" ng-click="removeMovie(movie)" ng-show="userLoggedIn">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-        <a ng-href='#/movies/new'>New movie</a>
+        <a ng-href="#/movies/new" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>New movie
+        </a>
     </div>
 </div>
